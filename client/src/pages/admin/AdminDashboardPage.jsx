@@ -34,8 +34,8 @@ const AdminDashboardPage = () => {
 const loadData = async () => {
   try {
     const [foodsRes, ordersRes] = await Promise.all([
-      apiClient.get("/api/foods"),
-      apiClient.get("/api/orders"),
+      api.get("/api/foods"),
+      api.get("/api/orders"),
     ]);
 
     console.log("foodsRes:", foodsRes.data);
