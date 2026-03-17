@@ -19,7 +19,7 @@ const CustomerMenuPage = () => {
     const fetchFoods = async () => {
       try {
         const res = await axios.get("/api/foods");
-        setFoods(Array.isArray(res.data) ? res.data : []);
+        setFoods(Array.isArray(res.data.foods) ? res.data.foods : []);
       } catch (e) {
         console.error(e);
       } finally {
