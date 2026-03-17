@@ -4,6 +4,7 @@ import MenuCategoryTabs from "../components/Customer/MenuCategoryTabs.jsx";
 import FoodCard from "../components/Customer/FoodCard.jsx";
 import FloatingCartButton from "../components/Customer/FloatingCartButton.jsx";
 
+
 const CustomerMenuPage = () => {
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,6 +20,7 @@ const CustomerMenuPage = () => {
     const fetchFoods = async () => {
       try {
         const res = await axios.get("/api/foods");
+        console.log("foods:", foods);
         setFoods(Array.isArray(res.data.foods) ? res.data.foods : []);
       } catch (e) {
         console.error(e);

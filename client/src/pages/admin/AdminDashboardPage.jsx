@@ -3,13 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken, setToken } from "../../utils/auth.js";
 import { socket } from "../../socket.js";
-import api from "../../utils/api";
 
-const apiClient = axios.create({
+const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-apiClient.interceptors.request.use((config) => {
+api.interceptors.request.use((config) => {
   const token = getToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
