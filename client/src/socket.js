@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
-import { SOCKET_URL } from "./config/api";
 
-export const socket = io(SOCKET_URL, {
-  transports: ["websocket"],
+export const socket = io(import.meta.env.VITE_SOCKET_URL, {
+  withCredentials: false,
+  transports: ["polling", "websocket"], // ✅ QUAN TRỌNG
 });

@@ -72,3 +72,7 @@ mongoose
     console.error("MongoDB connection error:", err);
     process.exit(1);
   });
+
+io.on("connection", (socket) => {
+  console.log("🔥 SOCKET CONNECTED:", socket.id);
+});
