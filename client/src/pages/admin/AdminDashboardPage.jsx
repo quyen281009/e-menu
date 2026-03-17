@@ -33,10 +33,14 @@ const AdminDashboardPage = () => {
     try {
       const [foodsRes, ordersRes] = await Promise.all([
         api.get("/api/foods"),
-        api.get("/api/orders")
+        api.get("/api/orders"),
       ]);
-      setFoods(foodsRes.data);
-      setOrders(ordersRes.data);
+
+      console.log("foodsRes:", foodsRes.data);
+      console.log("ordersRes:", ordersRes.data);
+
+      setFoods(foodsRes.data.foods || []);
+      setOrders(ordersRes.data.orders || []);
     } catch (err) {
       if (err.response?.status === 401) {
         setToken("");
