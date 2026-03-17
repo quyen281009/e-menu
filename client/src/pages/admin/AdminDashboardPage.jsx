@@ -5,11 +5,11 @@ import { getToken, setToken } from "../../utils/auth.js";
 import { socket } from "../../socket.js";
 import api from "../../utils/api";
 
-const api = axios.create({
+const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-api.interceptors.request.use((config) => {
+apiClient.interceptors.request.use((config) => {
   const token = getToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -32,27 +32,34 @@ const AdminDashboardPage = () => {
   });
   const navigate = useNavigate();
 
-  const loadData = async () => {
-    try {
-      const [foodsRes, ordersRes] = await Promise.all([
-        api.get("/api/foods"),
-        api.get("/api/orders"),
-      ]);
+const loadData = async () => {
+  try {
+    const [foodsRes, ordersRes] = await Promise.all([
+      apiClient.get("/api/foods"),
+      apiClient.get("/api/orders"),
+    ]);
 
-      console.log("foodsRes:", foodsRes.data);
-      console.log("ordersRes:", ordersRes.data);
+    console.log("foodsRes:", foodsRes.data);
+    console.log("ordersRes:", ordersRes.data);
 
-      setFoods(foodsRes.data.foods || []);
-      setOrders(ordersRes.data.orders || []);
-    } catch (err) {
-      if (err.response?.status === 401) {
-        setToken("");
-        navigate("/admin/login");
-      }
-    } finally {
-      setLoading(false);
+    const foodsData =
+      foodsRes.data.foods || foodsRes.data.data || foodsRes.data;
+
+    const ordersData =
+      ordersRes.data.orders || ordersRes.data.data || ordersRes.data;
+
+    // ✅ FIX CHUẨN
+    setFoods(Array.isArray(foodsData) ? foodsData : []);
+    setOrders(Array.isArray(ordersData) ? ordersData : []);
+  } catch (err) {
+    if (err.response?.status === 401) {
+      setToken("");
+      navigate("/admin/login");
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     loadData();
