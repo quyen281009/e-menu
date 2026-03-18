@@ -15,7 +15,10 @@ const AdminLoginPage = () => {
     setError("");
     setLoading(true);
     try {
-      const res = await axios.post("/api/auth/login", { username, password });
+      axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+        username,
+        password,
+      });
       setToken(res.data.token);
       navigate("/admin");
     } catch (err) {
