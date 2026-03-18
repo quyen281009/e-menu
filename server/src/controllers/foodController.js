@@ -24,11 +24,11 @@ export const createFood = async (req, res, next) => {
 export const updateFood = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, price, image, description, category } = req.body;
+    const { name, price, image, description, category, isAvailable } = req.body;
     const food = await Food.findByIdAndUpdate(
       id,
-      { name, price, image, description, category },
-      { new: true }
+      { name, price, image, description, category, isAvailable },
+      { new: true },
     );
     if (!food) {
       return res.status(404).json({ message: "Food not found" });

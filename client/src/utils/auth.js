@@ -7,4 +7,3 @@ export const setToken = (token) => {
     localStorage.removeItem("adminToken");
   }
 };
-
