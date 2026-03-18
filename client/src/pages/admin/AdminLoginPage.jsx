@@ -15,10 +15,14 @@ const AdminLoginPage = () => {
     setError("");
     setLoading(true);
     try {
-      axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-        username,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        {
+          username,
+          password,
+        },
+      );
+
       setToken(res.data.token);
       navigate("/admin");
     } catch (err) {
